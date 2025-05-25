@@ -1,16 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flower-app-deployment
+  name: vijay-flower-app-deployment
+  labels:
+    app: example
 spec: # Defines the Deployment Behaviour
   replicas: 3
   selector:
     matchLabels:
-      app: web
+      app: vijay
   template:
     metadata:
       labels:
-        app: web
+        app: vijay
     spec: # Define the Pod behaviour
       containers:
       - name: cart-app
@@ -24,3 +26,17 @@ spec: # Defines the Deployment Behaviour
             cpu: "50m"  
         ports:
         - containerPort: 3015
+--- 
+# Writing Service.yml to expose the application 
+apiVersion: v1
+kind: Service
+metadata:
+  name: vijay-flower-app-svc
+spec:
+  selector:
+    app: vijay
+  ports:
+  - port: 3016 # Service Port 
+    targetPort: 3015 # Container Port 
+  type: LoadBalancer   
+        
